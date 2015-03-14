@@ -5,7 +5,7 @@ from classes import Background
 def main():
     # Initialise screen
     pygame.init()
-    screen = pygame.display.set_mode((1024, 768))
+    screen = pygame.display.set_mode((800   , 600))
     pygame.display.set_caption('Piano')
 
     # Fill background
