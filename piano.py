@@ -9,9 +9,6 @@ def main():
     pygame.display.set_caption('Piano')
 
     # Fill background
-    # background = pygame.Surface(screen.get_size())
-    # background = background.convert()
-    # background.fill((250, 250, 250))
     background = Background('media/img/background.png', [0,0])
     screen.blit(background.image, background.rect)
 

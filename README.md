@@ -1,2 +1,9 @@
-# piano
-The piano game
+# Piano
+
+The piano game, in pygame
+
+## Develop
+
+* Install pygame
+* run `piano.py`
+
