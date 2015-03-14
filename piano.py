@@ -5,11 +5,11 @@ from classes import Background
 def main():
     # Initialise screen
     pygame.init()
-    screen = pygame.display.set_mode((1024, 768))
+    screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption('Piano')
 
     # Fill background
-    background = Background('media/img/background.png', [0,0])
+    background = Background([0,0])
     screen.blit(background.image, background.rect)
 
     # Blit everything to the screen
