@@ -13,11 +13,9 @@ def main():
     # background = background.convert()
     # background.fill((250, 250, 250))
     background = Background('media/img/background.png', [0,0])
-    screen.fill([255, 255, 255])
     screen.blit(background.image, background.rect)
 
     # Blit everything to the screen
-    screen.blit(background.image, (0, 0))
     pygame.display.flip()
 
     # Event loop
@@ -26,7 +24,7 @@ def main():
             if event.type == QUIT:
                 return
 
-        screen.blit(background.image, (0, 0))
+        screen.blit(background.image, background.rect)
         pygame.display.flip()
 
 
