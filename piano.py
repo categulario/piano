@@ -4,9 +4,12 @@ from classes import Background, Block
 from datetime import datetime
 
 notes  = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
-scales = [1, 2, 3, 4]
 
-tile_positions = {(note, scale):(460+(scale-1)*80, 500-(80*note_index)) for note_index, note in enumerate(notes) for scale in scales}
+tile_positions = {
+    (note, column):(460+(column)*80, 500-(80*note_index))
+    for note_index, note in enumerate(notes)
+    for column in range(4)
+}
 
 def main():
     # Initialise screen
@@ -23,7 +26,7 @@ def main():
 
     # Blocks
 
-    block = Block(tile_positions['E', 1])
+    block = Block(tile_positions['E', 0])
     screen.blit(block.image, block.rect)
 
     # Blit everything to the screen
