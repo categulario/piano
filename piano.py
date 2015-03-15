@@ -12,8 +12,7 @@ tile_positions = {
 }
 
 def gen_blocks(note_tuple):
-    print (note_tuple)
-    return Block(tile_positions[note_tuple])
+    return Block(tile_positions[note_tuple[0], note_tuple[1]["note"]])
 
 def main(session):
     trial = 0

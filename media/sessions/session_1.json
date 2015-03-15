@@ -1,5 +1,22 @@
 [
 	{
-		"notes": ["C", "D", "E", "F"]
+		"notes": [
+			{
+				"note": "C",
+				"scale": 1
+			},
+			{
+				"note": "B",
+				"scale": 2
+			},
+			{
+				"note": "F",
+				"scale": 3
+			},
+			{
+				"note": "A",
+				"scale": 3
+			}
+		]
 	}
 ]
