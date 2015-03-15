@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes import Background, Block
-from datetime import datetime
+from classes import Background, Block, RedLine
 import json
 
 notes  = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
@@ -36,8 +35,14 @@ def main(session):
     for block in blocks:
         screen.blit(block.image, block.rect)
 
+    # The red line
+    redline = RedLine(380, 460, 1)
+    screen.blit(redline.image, redline.rect)
+
     # Blit everything to the screen
     pygame.display.flip()
+
+    move = False
 
     # Event loop
     while 1:
@@ -55,7 +60,13 @@ def main(session):
         for block in blocks:
             screen.blit(block.image, block.rect)
 
+        if move:
+            redline.move()
+        screen.blit(redline.image, redline.rect)
+
         pygame.display.flip()
+
+        move = not move
 
 
 if __name__ == '__main__':
