@@ -1,15 +1,8 @@
 import pygame
 from pygame.locals import *
 from classes import Background, Block, RedLine
+from data import tile_positions, sound_keys
 import json
-
-notes  = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
-
-tile_positions = {
-    (column, note):(460+(column)*80, 500-(80*note_index))
-    for note_index, note in enumerate(notes)
-    for column in range(4)
-}
 
 def gen_blocks(note_tuple):
     return Block(tile_positions[note_tuple[0], note_tuple[1]["note"]])
@@ -25,8 +18,6 @@ def main(session):
     background = Background([0,0])
     screen.fill((255, 255, 255))
     screen.blit(background.image, background.rect)
-
-    sound = pygame.mixer.Sound('media/sound/5.wav')
 
     # Blocks
     blocks = list(map(gen_blocks, enumerate(session[trial]['notes'])))
@@ -44,12 +35,12 @@ def main(session):
     move = False
 
     # Event loop
-    while 1:
+    while True:
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == 27:
                 return
-            elif event.type == KEYDOWN and event.unicode == 'h':
-                sound.play()
+            elif event.type == KEYDOWN and event.unicode in sound_keys:
+                pass
             elif event.type == QUIT:
                 return
 
