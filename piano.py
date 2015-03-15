@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from classes import Background, Block, RedLine
-from data import tile_positions, sound_keys
+from data import tile_positions, sound_keys, sounds, sound_map
 import json
 
 def gen_blocks(note_tuple):
@@ -40,7 +40,7 @@ def main(session):
             if event.type == KEYDOWN and event.key == 27:
                 return
             elif event.type == KEYDOWN and event.unicode in sound_keys:
-                pass
+                sounds[sound_map[event.unicode]].play()
             elif event.type == QUIT:
                 return
 
