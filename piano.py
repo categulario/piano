@@ -2,16 +2,22 @@ import pygame
 from pygame.locals import *
 from classes import Background, Block
 from datetime import datetime
+import json
 
 notes  = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 
 tile_positions = {
-    (note, column):(460+(column)*80, 500-(80*note_index))
+    (column, note):(460+(column)*80, 500-(80*note_index))
     for note_index, note in enumerate(notes)
     for column in range(4)
 }
 
-def main():
+def gen_blocks(note_tuple):
+    print (note_tuple)
+    return Block(tile_positions[note_tuple])
+
+def main(session):
+    trial = 0
     # Initialise screen
     pygame.init()
     screen = pygame.display.set_mode((800, 600)) # FULLSCREEN
@@ -25,9 +31,10 @@ def main():
     sound = pygame.mixer.Sound('media/sound/5.wav')
 
     # Blocks
+    blocks = list(map(gen_blocks, enumerate(session[trial]['notes'])))
 
-    block = Block(tile_positions['E', 0])
-    screen.blit(block.image, block.rect)
+    for block in blocks:
+        screen.blit(block.image, block.rect)
 
     # Blit everything to the screen
     pygame.display.flip()
@@ -45,10 +52,13 @@ def main():
         screen.fill((255, 255, 255))
         screen.blit(background.image, background.rect)
 
-        screen.blit(block.image, block.rect)
+        for block in blocks:
+            screen.blit(block.image, block.rect)
 
         pygame.display.flip()
 
 
 if __name__ == '__main__':
-    main()
+    with open('media/sessions/session_1.json', 'r') as session_file:
+        session = json.load(session_file)
+        main(session)
