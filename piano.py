@@ -15,9 +15,13 @@ def main():
     # Blit everything to the screen
     pygame.display.flip()
 
+    sound = pygame.mixer.Sound('media/sound/13.wav')
+
     # Event loop
     while 1:
         for event in pygame.event.get():
+            if event.type == KEYDOWN and event.unicode == 'h':
+                sound.play()
             if event.type == QUIT:
                 return
 
