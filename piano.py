@@ -10,7 +10,6 @@ def gen_blocks(note_tuple):
     return Block(tile_positions[note_tuple[1][0], note_tuple[0]])
 
 def main(session):
-    trial = 0
     # Initialise screen
     pygame.init()
     screen = pygame.display.set_mode((800, 600)) # FULLSCREEN
