@@ -2,10 +2,12 @@ import pygame
 from pygame.locals import *
 from classes import Background, Block, RedLine
 from data import tile_positions, sound_keys, sounds, sound_map
+from itertools import islice
 import json
 
 def gen_blocks(note_tuple):
-    return Block(tile_positions[note_tuple[0], note_tuple[1]["note"]])
+    # index, note
+    return Block(tile_positions[note_tuple[1][0], note_tuple[0]])
 
 def main(session):
     trial = 0
@@ -20,7 +22,7 @@ def main(session):
     screen.blit(background.image, background.rect)
 
     # Blocks
-    blocks = list(map(gen_blocks, enumerate(session[trial]['notes'])))
+    blocks = list(map(gen_blocks, enumerate(islice(session, 4))))
 
     for block in blocks:
         screen.blit(block.image, block.rect)
@@ -42,7 +44,7 @@ def main(session):
             if event.type == KEYDOWN and event.key == 27:
                 return
             elif event.type == KEYDOWN and event.unicode in sound_keys:
-                sounds[sound_map[event.unicode]].play()
+                pass
             elif event.type == QUIT:
                 return
 
@@ -62,6 +64,6 @@ def main(session):
 
 
 if __name__ == '__main__':
-    with open('media/sessions/session_1.json', 'r') as session_file:
-        session = json.load(session_file)
-        main(session)
+    with open('media/sessions/session_1.csv', 'r') as session_file:
+        gen = (line.strip().split(',') for line in session_file)
+        main(gen)

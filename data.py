@@ -7,7 +7,7 @@ pygame.mixer.init()
 notes  = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 
 tile_positions = {
-    (column, note):(460+(column)*80, 500-(80*note_index))
+    (note, column):(460+(column)*80, 500-(80*note_index))
     for note_index, note in enumerate(notes)
     for column in range(4)
 }
