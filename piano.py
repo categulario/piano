@@ -26,16 +26,18 @@ def main(session):
         screen.blit(block.image, block.rect)
 
     # The red line
-    redline = RedLine(380, 460, 1)
+    redline = RedLine(380, 460, 2)
     screen.blit(redline.image, redline.rect)
 
     # Blit everything to the screen
     pygame.display.flip()
+    clock = pygame.time.Clock()
 
     move = False
 
     # Event loop
     while True:
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == 27:
                 return
