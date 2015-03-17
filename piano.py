@@ -42,7 +42,6 @@ def main(session, out_file, test):
 
     for block in blocks:
         screen.blit(block.image, block.rect)
-    screen.blit(block.image, block.rect)
 
     # The red line
     redline = RedLine(380, 460, 2)
