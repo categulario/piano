@@ -12,6 +12,9 @@ def gen_blocks(note_tuple):
 def nex_blocks(session):
     return list(map(gen_blocks, enumerate(islice(session, 4))))
 
+def next_scale(session):
+    return int(list(islice(session, 1))[0][1])
+
 def main(session):
     # Initialise screen
     pygame.init()
@@ -24,13 +27,14 @@ def main(session):
     screen.blit(background.image, background.rect)
 
     # Blocks
-    blocks = list(map(gen_blocks, enumerate(islice(session, 4))))
-    scale = Scale(3)
-    screen.blit(scale.image, scale.rect)
     blocks = nex_blocks(session)
-
+    
     for block in blocks:
         screen.blit(block.image, block.rect)
+
+    # Scales
+    scale = Scale(next_scale(session))
+    screen.blit(scale.image, scale.rect)
 
     # The red line
     redline = RedLine(380, 460, 2)
@@ -42,6 +46,8 @@ def main(session):
 
     move = False
     position = 0
+    lastPos = 0
+    chageScale = False
 
     # Event loop
     while True:
@@ -57,16 +63,27 @@ def main(session):
         screen.fill((255, 255, 255))
         screen.blit(background.image, background.rect)
 
-        screen.blit(scale.image, scale.rect)
 
         for block in blocks:
             screen.blit(block.image, block.rect)
+        
+        screen.blit(scale.image, scale.rect)
 
         if move:
             position = redline.move()
-            print(position)
             if position == 4:
                 blocks = nex_blocks(session)
+
+            if chageScale:
+                print(position)
+                scale = Scale(next_scale(session))
+
+            if position>lastPos:
+                chageScale = True
+                lastPos = position
+            else :
+                chageScale = False
+
         screen.blit(redline.image, redline.rect)
 
         pygame.display.flip()
