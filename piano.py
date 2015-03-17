@@ -24,14 +24,11 @@ def main(session):
     screen.blit(background.image, background.rect)
 
     # Blocks
-<<<<<<< HEAD
     blocks = list(map(gen_blocks, enumerate(islice(session, 4))))
     scale = Scale(3)
     screen.blit(scale.image, scale.rect)
-=======
     blocks = nex_blocks(session)
 
->>>>>>> abraham/master
     for block in blocks:
         screen.blit(block.image, block.rect)
 
