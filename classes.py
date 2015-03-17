@@ -26,12 +26,13 @@ class RedLine(pygame.sprite.Sprite):
             return 4
 
 class Block(pygame.sprite.Sprite):
-    def __init__(self, location):
+    def __init__(self, location, note, scale):
         self.velocity = 1
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('media/img/black.png')
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  location
+<<<<<<< HEAD
 
 class Scale(pygame.sprite.Sprite):
     def __init__(self, slcale):
@@ -39,3 +40,7 @@ class Scale(pygame.sprite.Sprite):
         self.image = pygame.image.load('media/img/scale_{0}.png'.format(slcale))
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  (20,20)
+=======
+        self.note  = note
+        self.scale = scale
+>>>>>>> abraham/master
