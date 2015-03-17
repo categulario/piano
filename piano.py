@@ -7,10 +7,20 @@ import json
 
 def gen_blocks(note_tuple):
     # index, note
-    return Block(tile_positions[note_tuple[1][0], note_tuple[0]])
+    return Block(tile_positions[note_tuple[1][0], note_tuple[0]], note_tuple[1][0], note_tuple[1][1])
 
 def nex_blocks(session):
     return list(map(gen_blocks, enumerate(islice(session, 4))))
+
+def eval_key(key, block):
+    res = 0
+    note  = sound_map[key][0]
+    scale = sound_map[key][1]
+    if note == block.note:
+        res += 1
+    if scale == block.scale:
+        res += 2
+    return res
 
 def main(session):
     # Initialise screen
