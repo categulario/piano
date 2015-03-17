@@ -26,9 +26,11 @@ class RedLine(pygame.sprite.Sprite):
             return 4
 
 class Block(pygame.sprite.Sprite):
-    def __init__(self, location):
+    def __init__(self, location, note, scale):
         self.velocity = 1
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('media/img/black.png')
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  location
+        self.note  = note
+        self.scale = scale
