@@ -36,8 +36,12 @@ class Block(pygame.sprite.Sprite):
         self.scale = int(scale)
 
 class Scale(pygame.sprite.Sprite):
-    def __init__(self, slcale):
+    def __init__(self, scale):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('media/img/scale_{0}.png'.format(slcale))
+        self.image = pygame.image.load('media/img/scale_{0}.png'.format(scale))
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  (20,20)
+
+scales = {
+    i:Scale(i) for i in range(1, 5)
+}

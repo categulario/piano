@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes import Background, Block, RedLine, Scale
+from classes import Background, Block, RedLine, scales
 from data import tile_positions, sound_keys, sounds, sound_map
 from itertools import islice
 import json
@@ -35,7 +35,7 @@ def main(session):
 
     # Blocks
     blocks = nex_blocks(session)
-    
+
     for block in blocks:
         screen.blit(block.image, block.rect)
     screen.blit(block.image, block.rect)
@@ -44,14 +44,13 @@ def main(session):
     redline = RedLine(380, 460, 2)
     screen.blit(redline.image, redline.rect)
 
-    # Scale
-    scale = Scale(blocks[0].scale)
+    scale = scales[blocks[0].scale]
 
     # Blit everything to the screen
     pygame.display.flip()
     clock = pygame.time.Clock()
 
-    move = False
+    move = True
     position = 0
 
     # Event loop
@@ -77,8 +76,8 @@ def main(session):
             if position == 4:
                 blocks = nex_blocks(session)
             elif position > -1:
-                scale = Scale(blocks[position].scale)
-                
+                scale = scales[blocks[position].scale]
+
         screen.blit(redline.image, redline.rect)
         screen.blit(scale.image, scale.rect)
 
