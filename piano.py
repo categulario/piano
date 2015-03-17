@@ -9,6 +9,9 @@ def gen_blocks(note_tuple):
     # index, note
     return Block(tile_positions[note_tuple[1][0], note_tuple[0]])
 
+def nex_blocks(session):
+    return list(map(gen_blocks, enumerate(islice(session, 4))))
+
 def main(session):
     # Initialise screen
     pygame.init()
@@ -21,9 +24,14 @@ def main(session):
     screen.blit(background.image, background.rect)
 
     # Blocks
+<<<<<<< HEAD
     blocks = list(map(gen_blocks, enumerate(islice(session, 4))))
     scale = Scale(3)
     screen.blit(scale.image, scale.rect)
+=======
+    blocks = nex_blocks(session)
+
+>>>>>>> abraham/master
     for block in blocks:
         screen.blit(block.image, block.rect)
 
@@ -57,7 +65,9 @@ def main(session):
             screen.blit(block.image, block.rect)
 
         if move:
-            redline.move()
+            position = redline.move()
+            if position == 4:
+                blocks = nex_blocks(session)
         screen.blit(redline.image, redline.rect)
 
         pygame.display.flip()
