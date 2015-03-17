@@ -38,6 +38,7 @@ def main(session):
     clock = pygame.time.Clock()
 
     move = False
+    position = 0
 
     # Event loop
     while True:
@@ -46,7 +47,7 @@ def main(session):
             if event.type == KEYDOWN and event.key == 27:
                 return
             elif event.type == KEYDOWN and event.unicode in sound_keys:
-                pass
+                sounds[sound_map[event.unicode]].play()
             elif event.type == QUIT:
                 return
 
