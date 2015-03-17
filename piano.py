@@ -15,10 +15,8 @@ def nex_blocks(session):
         return Block(tile_positions[note_tuple[1][0], note_tuple[0]], note_tuple[1][0], note_tuple[1][1])
     return list(map(gen_blocks, enumerate(islice(session, 4))))
 
-def eval_key(key, block):
+def eval_key(block, note, scale):
     res = EVAL_CLICK
-    note  = sound_map[key][0]
-    scale = sound_map[key][1]
     if note == block.note:
         res |= EVAL_NOTE
     if scale == block.scale:
@@ -62,7 +60,7 @@ def main(session, out_file, test):
                 return
             elif event.type == KEYDOWN and event.unicode in sound_keys:
                 if not (essay[position] & EVAL_CLICK):
-                    essay[position] = eval_key(event.unicode, blocks[position])
+                    essay[position] = eval_key(blocks[position], *sound_map[event.unicode])
                     if (essay[position] & test) == test:
                         sounds[sound_map[event.unicode]].play()
             elif event.type == QUIT:
