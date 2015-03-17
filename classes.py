@@ -18,7 +18,7 @@ class RedLine(pygame.sprite.Sprite):
         self.loop_x = loop_x
 
     def move(self):
-        if self.rect.left < 780:
+        if self.rect.left < 780-self.speed:
             self.rect.left += self.speed
             return (self.rect.left-460)//80
         else:
