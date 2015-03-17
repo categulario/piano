@@ -63,6 +63,7 @@ def main(session):
 
         if move:
             position = redline.move()
+            print(position)
             if position == 4:
                 blocks = nex_blocks(session)
         screen.blit(redline.image, redline.rect)
