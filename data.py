@@ -12,7 +12,36 @@ tile_positions = {
     for column in range(4)
 }
 
-sound_keys = '3456789ertyuiodfghjklcvbnm,.'
+sound_keys = [
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'e',
+    'r',
+    't',
+    'y',
+    'u',
+    'i',
+    'o',
+    'd',
+    'f',
+    'g',
+    'h',
+    'j',
+    'k',
+    'l',
+    'c',
+    'v',
+    'b',
+    'n',
+    'm',
+    ',',
+    '.',
+]
 
 sound_map = {
     '3' : ('C', 1),
