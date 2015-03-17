@@ -4,6 +4,11 @@ from classes import Background, Block, RedLine, scales
 from data import tile_positions, sound_keys, sounds, sound_map
 from itertools import islice
 
+EVAL_CLICK = 1
+EVAL_NOTE  = 2
+EVAL_SCALE = 4
+EVAL_TIME  = 8
+
 def nex_blocks(session):
     def gen_blocks(note_tuple):
         # index, note
@@ -11,13 +16,13 @@ def nex_blocks(session):
     return list(map(gen_blocks, enumerate(islice(session, 4))))
 
 def eval_key(key, block):
-    res = 1
+    res = EVAL_CLICK
     note  = sound_map[key][0]
     scale = sound_map[key][1]
     if note == block.note:
-        res += 2
+        res |= EVAL_NOTE
     if scale == block.scale:
-        res += 4
+        res |= EVAL_SCALE
     return res
 
 def csv_result(essay):
@@ -63,7 +68,7 @@ def main(session, out_file, test):
             if event.type == KEYDOWN and event.key == 27:
                 return
             elif event.type == KEYDOWN and event.unicode in sound_keys:
-                if not (essay[position] & 1):
+                if not (essay[position] & EVAL_CLICK):
                     essay[position] = eval_key(event.unicode, blocks[position])
                     if (essay[position] & test) == test:
                         sounds[sound_map[event.unicode]].play()
@@ -100,4 +105,4 @@ if __name__ == '__main__':
     with open('media/sessions/session_1.csv', 'r') as session_file:
         with open('media/sessions/output_1.csv', 'w') as out_file:
             gen = (line.strip().split(',') for line in session_file)
-            collected_data = main(gen, out_file, 6)
+            collected_data = main(gen, out_file, EVAL_SCALE)
