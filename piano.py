@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes import Background, Block, RedLine
+from classes import Background, Block, RedLine, Scale
 from data import tile_positions, sound_keys, sounds, sound_map
 from itertools import islice
 import json
@@ -22,7 +22,8 @@ def main(session):
 
     # Blocks
     blocks = list(map(gen_blocks, enumerate(islice(session, 4))))
-
+    scale = Scale(3)
+    screen.blit(scale.image, scale.rect)
     for block in blocks:
         screen.blit(block.image, block.rect)
 
@@ -49,6 +50,8 @@ def main(session):
 
         screen.fill((255, 255, 255))
         screen.blit(background.image, background.rect)
+
+        screen.blit(scale.image, scale.rect)
 
         for block in blocks:
             screen.blit(block.image, block.rect)

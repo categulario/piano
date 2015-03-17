@@ -30,3 +30,10 @@ class Block(pygame.sprite.Sprite):
         self.image = pygame.image.load('media/img/black.png')
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  location
+
+class Scale(pygame.sprite.Sprite):
+    def __init__(self, slcale):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('media/img/scale_{0}.png'.format(slcale))
+        self.rect  = self.image.get_rect()
+        self.rect.left, self.rect.top =  (20,20)
