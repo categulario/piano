@@ -38,23 +38,16 @@ def main(session, out_file, test):
 
     # Fill background
     background = Background([0,0])
-    screen.fill((255, 255, 255))
-    screen.blit(background.image, background.rect)
 
     # Blocks
     blocks = nex_blocks(session)
 
-    for block in blocks:
-        screen.blit(block.image, block.rect)
-
     # The red line
     redline = RedLine(380, 460, 2)
-    screen.blit(redline.image, redline.rect)
 
     scale = scales[blocks[0].scale]
 
     # Blit everything to the screen
-    pygame.display.flip()
     clock = pygame.time.Clock()
 
     move     = False # controls redline motion speed
