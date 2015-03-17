@@ -32,7 +32,8 @@ class Block(pygame.sprite.Sprite):
         self.image = pygame.image.load('media/img/black.png')
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  location
-<<<<<<< HEAD
+        self.note  = note
+        self.scale = int(scale)
 
 class Scale(pygame.sprite.Sprite):
     def __init__(self, slcale):
@@ -40,7 +41,3 @@ class Scale(pygame.sprite.Sprite):
         self.image = pygame.image.load('media/img/scale_{0}.png'.format(slcale))
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  (20,20)
-=======
-        self.note  = note
-        self.scale = scale
->>>>>>> abraham/master

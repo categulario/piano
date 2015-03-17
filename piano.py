@@ -7,13 +7,20 @@ import json
 
 def gen_blocks(note_tuple):
     # index, note
-    return Block(tile_positions[note_tuple[1][0], note_tuple[0]])
+    return Block(tile_positions[note_tuple[1][0], note_tuple[0]], note_tuple[1][0], note_tuple[1][1])
 
 def nex_blocks(session):
     return list(map(gen_blocks, enumerate(islice(session, 4))))
 
-def next_scale(session):
-    return int(list(islice(session, 1))[0][1])
+def eval_key(key, block):
+    res = 0
+    note  = sound_map[key][0]
+    scale = sound_map[key][1]
+    if note == block.note:
+        res += 1
+    if scale == block.scale:
+        res += 2
+    return res
 
 def main(session):
     # Initialise screen
@@ -31,14 +38,14 @@ def main(session):
     
     for block in blocks:
         screen.blit(block.image, block.rect)
-
-    # Scales
-    scale = Scale(next_scale(session))
-    screen.blit(scale.image, scale.rect)
+    screen.blit(block.image, block.rect)
 
     # The red line
     redline = RedLine(380, 460, 2)
     screen.blit(redline.image, redline.rect)
+
+    # Scale
+    scale = Scale(blocks[0].scale)
 
     # Blit everything to the screen
     pygame.display.flip()
@@ -46,8 +53,6 @@ def main(session):
 
     move = False
     position = 0
-    lastPos = 0
-    chageScale = False
 
     # Event loop
     while True:
@@ -66,25 +71,16 @@ def main(session):
 
         for block in blocks:
             screen.blit(block.image, block.rect)
-        
-        screen.blit(scale.image, scale.rect)
 
         if move:
             position = redline.move()
             if position == 4:
                 blocks = nex_blocks(session)
-
-            if chageScale:
-                print(position)
-                scale = Scale(next_scale(session))
-
-            if position>lastPos:
-                chageScale = True
-                lastPos = position
-            else :
-                chageScale = False
-
+            elif position > -1:
+                scale = Scale(blocks[position].scale)
+                
         screen.blit(redline.image, redline.rect)
+        screen.blit(scale.image, scale.rect)
 
         pygame.display.flip()
 
