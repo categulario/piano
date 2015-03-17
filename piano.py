@@ -3,7 +3,6 @@ from pygame.locals import *
 from classes import Background, Block, RedLine, scales
 from data import tile_positions, sound_keys, sounds, sound_map
 from itertools import islice
-import json
 
 def nex_blocks(session):
     def gen_blocks(note_tuple):
