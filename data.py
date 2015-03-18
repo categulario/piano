@@ -4,14 +4,17 @@ import time
 
 pygame.mixer.init()
 
+# Available notes
 notes  = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 
+# Compute positions in the screen given the note and the column of the block
 tile_positions = {
     (note, column):(460+(column)*80, 500-(80*note_index))
     for note_index, note in enumerate(notes)
     for column in range(4)
 }
 
+# Valid keys for this game
 sound_keys = [
     '3',
     '4',
@@ -43,6 +46,7 @@ sound_keys = [
     '.',
 ]
 
+# Map keys to their corresponding note and scale
 sound_map = {
     '3' : ('C', 1),
     '4' : ('D', 1),
@@ -74,12 +78,14 @@ sound_map = {
     '.' : ('B', 4),
 }
 
+# Map (note, scale) to its respective sound
 sounds = {
     (note, scale): pygame.mixer.Sound('media/sound/%s_%d.wav'%(note, scale))
     for note in notes
     for scale in range(1, 5)
 }
 
+# test soud play
 if __name__ == '__main__':
     sounds['A', 2].play()
     time.sleep(3)

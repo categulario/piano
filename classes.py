@@ -1,6 +1,7 @@
 import pygame
 
 class Background(pygame.sprite.Sprite):
+    """Background image sprite"""
     def __init__(self, location):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('media/img/background.png')
@@ -8,6 +9,7 @@ class Background(pygame.sprite.Sprite):
         self.rect.left, self.rect.top = location
 
 class RedLine(pygame.sprite.Sprite):
+    """The moving redline"""
     def __init__(self, start_x, loop_x, speed):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('media/img/line.png')
@@ -18,6 +20,7 @@ class RedLine(pygame.sprite.Sprite):
         self.loop_x = loop_x
 
     def move(self):
+        """Moves the redline to the next position and return current column"""
         if self.rect.left < 780-self.speed:
             self.rect.left += self.speed
             return (self.rect.left-460)//80
@@ -26,6 +29,7 @@ class RedLine(pygame.sprite.Sprite):
             return 4
 
 class Block(pygame.sprite.Sprite):
+    """Black blocks that indicate the note to be played"""
     def __init__(self, location, note, scale):
         self.velocity = 1
         pygame.sprite.Sprite.__init__(self)
@@ -36,12 +40,14 @@ class Block(pygame.sprite.Sprite):
         self.scale = int(scale)
 
 class Scale(pygame.sprite.Sprite):
+    """The sprite for the 4 available scales"""
     def __init__(self, scale):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('media/img/scale_{0}.png'.format(scale))
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top =  (20,20)
 
+# Compute the only four scales used
 scales = {
     i:Scale(i) for i in range(1, 5)
 }
