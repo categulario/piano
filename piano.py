@@ -3,14 +3,15 @@ from pygame.locals import *
 from classes import Background, Block, RedLine, scales, get_icon
 from data import tile_positions, sound_keys, sounds, sound_map
 from gameio import csv_result, get_out_name
+from settings import settings
 from itertools import islice
 import os
 
 # Bitmask values for evaluation
-EVAL_CLICK = 1
-EVAL_NOTE  = 2
-EVAL_SCALE = 4
-EVAL_TIME  = 8
+EVAL_CLICK = settings.get('EVAL_CLICK')
+EVAL_NOTE  = settings.get('EVAL_NOTE')
+EVAL_SCALE = settings.get('EVAL_SCALE')
+EVAL_TIME  = settings.get('EVAL_TIME')
 
 def nex_blocks(session):
     """Get next four blocks from session and map them to a list of Block objects
@@ -126,9 +127,9 @@ def main(session, out_file, test):
 
 if __name__ == '__main__':
     # names of files for read and write
-    sess_dir  = 'media/sessions'
-    out_dir   = 'media/data'
-    read_file = 'test.csv'
+    sess_dir  = settings.get('SESSION_DIR')
+    out_dir   = settings.get('OUTPUT_DIR')
+    read_file = settings.get('READ_FILE')
 
     sess_name = os.path.join(sess_dir, read_file)
     out_name  = os.path.join(out_dir, get_out_name(read_file))
@@ -139,4 +140,4 @@ if __name__ == '__main__':
         sess_gen = (line.strip().split(',') for line in session_file)
 
         # call the main funciton with the session, output file and test values
-        main(sess_gen, out_file, EVAL_TIME | EVAL_NOTE | EVAL_SCALE)
+        main(sess_gen, out_file, settings.get('EVALUATION_CRITERIA'))
