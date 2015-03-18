@@ -53,4 +53,4 @@ docs/_build/
 # PyBuilder
 target/
 /Piano.sublime-workspace
-/media/sessions/output_1.csv
+/media/sessions/*.csv
