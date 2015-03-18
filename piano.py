@@ -23,9 +23,15 @@ def eval_key(block, note, scale):
         res |= EVAL_SCALE
     return res
 
+def gen_essay(blocks):
+    return [
+        [block.note, block.scale, 0]
+        for block in blocks
+    ]
+
 def csv_result(essay):
     def to_line(val):
-        return str(val)+'\n'
+        return ','.join(map(str, val))+'\n'
     return map(to_line, essay)
 
 def main(session, out_file, test):
@@ -50,7 +56,7 @@ def main(session, out_file, test):
 
     move     = False # controls redline motion speed
     position = 0 # stores redline column (zero-indexed)
-    essay    = [0]*4 # keeps record of the essay
+    essay    = gen_essay(blocks) # keeps record of the essay
 
     # Event loop
     while True:
@@ -59,9 +65,9 @@ def main(session, out_file, test):
             if event.type == KEYDOWN and event.key == 27:
                 return
             elif event.type == KEYDOWN and event.unicode in sound_keys:
-                if not (essay[position] & EVAL_CLICK):
-                    essay[position] = eval_key(blocks[position], *sound_map[event.unicode])
-                    if (essay[position] & test) == test:
+                if not (essay[position][2] & EVAL_CLICK):
+                    essay[position][2] = eval_key(blocks[position], *sound_map[event.unicode])
+                    if (essay[position][2] & test) == test:
                         sounds[sound_map[event.unicode]].play()
             elif event.type == QUIT:
                 return
@@ -77,8 +83,8 @@ def main(session, out_file, test):
             position = redline.move()
             if position == 4:
                 out_file.writelines(csv_result(essay))
-                essay = [0]*4
                 blocks = nex_blocks(session)
+                essay  = gen_essay(blocks)
                 if not blocks:
                     break
             elif position > -1:
@@ -98,4 +104,4 @@ if __name__ == '__main__':
     with open('media/sessions/session_1.csv', 'r') as session_file:
         with open('media/sessions/output_1.csv', 'w') as out_file:
             gen = (line.strip().split(',') for line in session_file)
-            collected_data = main(gen, out_file, EVAL_SCALE)
+            collected_data = main(gen, out_file, EVAL_TIME | EVAL_NOTE | EVAL_SCALE)
