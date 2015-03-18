@@ -1,5 +1,8 @@
 import pygame
 
+def get_icon():
+    return pygame.image.load('media/img/favicon.png')
+
 class Background(pygame.sprite.Sprite):
     """Background image sprite"""
     def __init__(self, location):

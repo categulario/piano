@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes import Background, Block, RedLine, scales
+from classes import Background, Block, RedLine, scales, get_icon
 from data import tile_positions, sound_keys, sounds, sound_map
 from gameio import csv_result, get_out_name
 from itertools import islice
@@ -43,6 +43,8 @@ def main(session, out_file, test):
     pygame.init()
     # the game screen, pass FULLSCREEN to fullscreen
     screen = pygame.display.set_mode((800, 600))
+    # Game icon
+    pygame.display.set_icon(get_icon())
     # Game title
     pygame.display.set_caption('Piano')
 
@@ -126,7 +128,7 @@ if __name__ == '__main__':
     # names of files for read and write
     sess_dir  = 'media/sessions'
     out_dir   = 'media/data'
-    read_file = 'test.piano'
+    read_file = 'test.csv'
 
     sess_name = os.path.join(sess_dir, read_file)
     out_name  = os.path.join(out_dir, get_out_name(read_file))
