@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from classes import Background, Block, RedLine, scales
 from data import tile_positions, sound_keys, sounds, sound_map
+from gameio import csv_result, get_out_name
 from itertools import islice
 
 # Bitmask values for evaluation
@@ -34,13 +35,6 @@ def gen_essay(blocks):
         [block.note, block.scale, 0]
         for block in blocks
     ]
-
-def csv_result(essay):
-    """Given the essay evaluation matrix return the string to be written to
-    output file"""
-    def to_line(val):
-        return ','.join(map(str, val))+'\n'
-    return map(to_line, essay)
 
 def main(session, out_file, test):
     """Main entry point of this game, keeps the game loop"""
@@ -130,7 +124,7 @@ def main(session, out_file, test):
 if __name__ == '__main__':
     # names of files for read and write
     sess_name = 'media/sessions/session_1.csv'
-    out_name  = 'media/sessions/output_1.csv'
+    out_name  = get_out_name(sess_name)
 
     # this is a context manager, once completed files are closed
     with open(sess_name, 'r') as session_file, open(out_name, 'w') as out_file:
@@ -138,4 +132,4 @@ if __name__ == '__main__':
         sess_gen = (line.strip().split(',') for line in session_file)
 
         # call the main funciton with the session, output file and test values
-        main(gen, out_file, EVAL_TIME | EVAL_NOTE | EVAL_SCALE)
+        main(sess_gen, out_file, EVAL_TIME | EVAL_NOTE | EVAL_SCALE)
