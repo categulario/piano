@@ -6,6 +6,7 @@ from gameio import csv_result, get_out_name
 from settings import settings
 from itertools import islice
 import os
+import sys
 
 # Bitmask values for evaluation
 EVAL_CLICK = settings.get('EVAL_CLICK')
@@ -132,12 +133,20 @@ if __name__ == '__main__':
     read_file = settings.get('READ_FILE')
 
     sess_name = os.path.join(sess_dir, read_file)
-    out_name  = os.path.join(out_dir, get_out_name(read_file))
+
+    output_adapter = settings.get('OUTPUT_ADAPTER')
+    if (output_adapter == 'file'):
+        output_handler  = open(os.path.join(out_dir, get_out_name(read_file)), 'w')
+    else:
+        output_handler  = sys.stdout
 
     # this is a context manager, once completed files are closed
-    with open(sess_name, 'r') as session_file, open(out_name, 'w') as out_file:
+    with open(sess_name, 'r') as session_file:
         # a generator that splits content of each line in session_file
         sess_gen = (line.strip().split(',') for line in session_file)
 
         # call the main funciton with the session, output file and test values
-        main(sess_gen, out_file, settings.get('EVALUATION_CRITERIA'))
+        main(sess_gen, output_handler, settings.get('EVALUATION_CRITERIA'))
+
+    if output_handler is not sys.stdout:
+        output_handler.close()
