@@ -16,7 +16,7 @@ def nex_blocks(session):
     return list(map(gen_blocks, enumerate(islice(session, 4))))
 
 def eval_key(block, note, scale):
-    res = EVAL_CLICK
+    res = EVAL_CLICK | EVAL_TIME
     if note == block.note:
         res |= EVAL_NOTE
     if scale == block.scale:
@@ -69,9 +69,9 @@ def main(session, out_file, test):
         screen.fill((255, 255, 255))
         screen.blit(background.image, background.rect)
 
-
-        for block in blocks:
-            screen.blit(block.image, block.rect)
+        if test & EVAL_NOTE:
+            for block in blocks:
+                screen.blit(block.image, block.rect)
 
         if move:
             position = redline.move()
@@ -84,8 +84,10 @@ def main(session, out_file, test):
             elif position > -1:
                 scale = scales[blocks[position].scale]
 
-        screen.blit(redline.image, redline.rect)
-        screen.blit(scale.image, scale.rect)
+        if test & EVAL_TIME:
+            screen.blit(redline.image, redline.rect)
+        if test & EVAL_SCALE:
+            screen.blit(scale.image, scale.rect)
 
         pygame.display.flip()
 
