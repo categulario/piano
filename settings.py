@@ -4,7 +4,7 @@ import os
 
 class SettingsLoader:
     def __init__(self):
-        ENVIRONMENT     = os.environ.get('PIANO_ENVIRONMENT', 'development')
+        ENVIRONMENT     = os.environ.get('PIANO_ENVIRONMENT', 'play')
         SETTINGS_MODULE = os.environ.get('PIANO_SETTINGS_MODULE', 'conf')
 
         settings = __import__(SETTINGS_MODULE + '.settings').__getattribute__('settings').__dict__
