@@ -4,6 +4,7 @@ from classes import Background, Block, RedLine, scales
 from data import tile_positions, sound_keys, sounds, sound_map
 from gameio import csv_result, get_out_name
 from itertools import islice
+import os
 
 # Bitmask values for evaluation
 EVAL_CLICK = 1
@@ -123,8 +124,12 @@ def main(session, out_file, test):
 
 if __name__ == '__main__':
     # names of files for read and write
-    sess_name = 'media/sessions/session_1.csv'
-    out_name  = get_out_name(sess_name)
+    sess_dir  = 'media/sessions'
+    out_dir   = 'media/data'
+    read_file = 'test.piano'
+
+    sess_name = os.path.join(sess_dir, read_file)
+    out_name  = os.path.join(out_dir, get_out_name(read_file))
 
     # this is a context manager, once completed files are closed
     with open(sess_name, 'r') as session_file, open(out_name, 'w') as out_file:
