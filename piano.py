@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes import Background, Block, RedLine, scales, get_icon
+from classes import Background, Block, RedLine, scales, get_icon, infoscreens
 from data import tile_positions, sound_keys, sounds, sound_map
 from gameio import csv_result, get_out_name
 from settings import settings
@@ -51,7 +51,7 @@ def main(session, out_file, test):
     pygame.display.set_caption('Piano')
 
     # Fill background
-    background = Background([0,0])
+    background = Background()
 
     # Blocks
     blocks = nex_blocks(session)
@@ -68,6 +68,30 @@ def main(session, out_file, test):
     move     = False # controls redline motion speed
     position = 0 # stores current column
     essay    = gen_essay(blocks) # Essay evaluation matrix
+    current_info = 0
+
+    while True:
+        # tick to 60 fps
+        clock.tick(60)
+        # Handle events
+        for event in pygame.event.get():
+            if event.type == KEYDOWN and event.key == 27:
+                # ESC key, exit game
+                return
+            elif event.type == KEYDOWN:
+                # Valid key, validate input and update essay evaluation matrix
+                current_info += 1
+                if current_info == 8:
+                    break
+            elif event.type == QUIT:
+                # Handles window close button
+                return
+        else:
+            screen.blit(infoscreens[current_info].image, infoscreens[current_info].rect)
+
+            pygame.display.flip()
+            continue
+        break
 
     # Event loop
     while True:
