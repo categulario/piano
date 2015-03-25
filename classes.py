@@ -11,6 +11,14 @@ class Background(pygame.sprite.Sprite):
         self.rect  = self.image.get_rect()
         self.rect.left, self.rect.top = location
 
+class InfoBackground(pygame.sprite.Sprite):
+    """Background image sprite"""
+    def __init__(self, location):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('media/img/infobg.png')
+        self.rect  = self.image.get_rect()
+        self.rect.left, self.rect.top = location
+
 class RedLine(pygame.sprite.Sprite):
     """The moving redline"""
     def __init__(self, start_x, loop_x, speed):
