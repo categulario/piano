@@ -44,7 +44,7 @@ def main(session, out_file, test):
     # Initialize screen
     pygame.init()
     # the game screen, pass FULLSCREEN to fullscreen
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((800, 600), FULLSCREEN)
     # Game icon
     pygame.display.set_icon(get_icon())
     # Game title
