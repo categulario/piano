@@ -5,19 +5,19 @@ def get_icon():
 
 class Background(pygame.sprite.Sprite):
     """Background image sprite"""
-    def __init__(self, location):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('media/img/background.png')
         self.rect  = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+        self.rect.left, self.rect.top = (0, 0)
 
 class InfoBackground(pygame.sprite.Sprite):
     """Background image sprite"""
-    def __init__(self, location):
+    def __init__(self, num):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('media/img/infobg.png')
+        self.image = pygame.image.load('media/img/infoscreen_%d.png'%num)
         self.rect  = self.image.get_rect()
-        self.rect.left, self.rect.top = location
+        self.rect.left, self.rect.top = (0, 0)
 
 class RedLine(pygame.sprite.Sprite):
     """The moving redline"""
@@ -62,3 +62,7 @@ class Scale(pygame.sprite.Sprite):
 scales = {
     i:Scale(i) for i in range(1, 5)
 }
+
+infoscreens = [
+    InfoBackground(i) for i in range(8)
+]
