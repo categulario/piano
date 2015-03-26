@@ -10,4 +10,4 @@ def csv_result(essay):
 def get_out_name(sess_name):
     """Compute the name for the output file given the input file name"""
     base = '.'.join(sess_name.split('.')[:-1])
-    return '%s_output_%s.csv'%(base, datetime.now())
+    return '%s_output_%s.csv'%(base, datetime.now().strftime('%Y-%m-%dT%H-%M-%S'))
