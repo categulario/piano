@@ -9,10 +9,10 @@ import os
 import sys
 
 # Bitmask values for evaluation
-EVAL_CLICK = settings.get('EVAL_CLICK')
-EVAL_NOTE  = settings.get('EVAL_NOTE')
-EVAL_SCALE = settings.get('EVAL_SCALE')
-EVAL_TIME  = settings.get('EVAL_TIME')
+EVAL_CLICK = 1
+EVAL_NOTE  = 2
+EVAL_SCALE = 4
+EVAL_TIME  = 8
 
 def nex_blocks(session):
     """Get next four blocks from session and map them to a list of Block objects
@@ -151,27 +151,5 @@ def main(session, out_file, test):
 
 
 if __name__ == '__main__':
-    session = PianoSession()
-    # names of files for read and write
-    sess_dir  = settings.get('SESSION_DIR')
-    out_dir   = settings.get('OUTPUT_DIR')
-    read_file = settings.get('READ_FILE')
-
-    sess_name = os.path.join(sess_dir, read_file)
-
-    output_adapter = settings.get('OUTPUT_ADAPTER')
-    if (output_adapter == 'file'):
-        output_handler  = open(os.path.join(out_dir, get_out_name(read_file)), 'w')
-    else:
-        output_handler  = sys.stdout
-
-    # this is a context manager, once completed files are closed
-    with open(sess_name, 'r') as session_file:
-        # a generator that splits content of each line in session_file
-        sess_gen = (line.strip().split(',') for line in session_file)
-
-        # call the main funciton with the session, output file and test values
-        main(sess_gen, output_handler, settings.get('EVALUATION_CRITERIA'))
-
-    if output_handler is not sys.stdout:
-        output_handler.close()
+    with PianoSession() as piano_session:
+        print (piano_session)
