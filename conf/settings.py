@@ -19,7 +19,7 @@ OUTPUT_DIR = 'media/data'
 # Default file to take session
 READ_FILE = 'test.csv'
 
-# The defailt evaluation criteria, evaluate everything
+# The default evaluation criteria, evaluate everything
 EVALUATION_CRITERIA = EVAL_CLICK | EVAL_NOTE | EVAL_SCALE | EVAL_TIME
 
 # Where to write output, one of ('file', 'console')

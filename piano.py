@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from classes import Background, Block, RedLine, scales, get_icon, infoscreens
 from data import tile_positions, sound_keys, sounds, sound_map
-from gameio import csv_result, get_out_name
+from gameio import csv_result, get_out_name, PianoSession
 from settings import settings
 from itertools import islice
 import os
@@ -151,6 +151,7 @@ def main(session, out_file, test):
 
 
 if __name__ == '__main__':
+    session = PianoSession()
     # names of files for read and write
     sess_dir  = settings.get('SESSION_DIR')
     out_dir   = settings.get('OUTPUT_DIR')
