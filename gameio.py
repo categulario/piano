@@ -22,35 +22,32 @@ class PianoSession:
     player       = ''
     all_sessions = {}
 
-    sessions_file_name  = 'sessions.json'
-    sessions_file_read  = None
-    sessions_file_write = None
+    sess_file_name = 'sessions.json'
 
     def __init__(self):
-        self.sessions_file_write = open(self.sessions_file_name, 'w')
-        self.sessions_file_read  = open(self.sessions_file_name, 'r')
-
-        if not os.path.isfile(self.sessions_file_name):
-            json.dump({
-                'players': {}
-            }, self.sessions_file_write, indent=4)
-            self.sessions_file_write.flush()
+        if not os.path.isfile(self.sess_file_name):
+            with open(self.sess_file_name, 'w') as sess_file:
+                json.dump({
+                    'players': {}
+                }, sess_file, indent=4)
 
     def __enter__(self):
         self.read_session()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.write_session()
 
     def read_session(self):
-        all_sessions = json.load(self.sessions_file_read)
+        with open(self.sess_file_name, 'r') as sess_file:
+            all_sessions = json.load(sess_file)
         players      = all_sessions['players'].keys()
 
         print ('Bienvenido al juego, elige un jugador de la lista o crea uno nuevo')
         print ('escribiendo un nuevo nombre')
         print ('')
         print ('Jugadores disponibles:')
-        print (', '.join(players) if players else 'Ninguno')
+        print (', '.join(players) if players else '<Ninguno>')
         print ()
 
         player = input ('Entrar jugador: ')
@@ -102,7 +99,12 @@ class PianoSession:
 
     def write_session(self):
         self.all_sessions['players'][self.player] = self.session
-        json.dump(self.all_sessions, self.sessions_file_write, indent=4)
+
+        with open(self.sess_file_name, 'w') as sess_file:
+            json.dump(self.all_sessions, sess_file, indent=4)
+
+    def __str__(self):
+        return '<Sesión de %s>'%self.player
 
 if __name__ == '__main__':
     with PianoSession() as ps:
