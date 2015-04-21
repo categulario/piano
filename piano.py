@@ -39,12 +39,12 @@ def gen_essay(blocks):
         for block in blocks
     ]
 
-def main(session, out_file, test):
+def main(session):
     """Main entry point of this game, keeps the game loop"""
     # Initialize screen
     pygame.init()
     # the game screen, pass FULLSCREEN to fullscreen
-    screen = pygame.display.set_mode((800, 600), FULLSCREEN)
+    screen = pygame.display.set_mode((800, 600))
     # Game icon
     pygame.display.set_icon(get_icon())
     # Game title
@@ -152,4 +152,4 @@ def main(session, out_file, test):
 
 if __name__ == '__main__':
     with PianoSession() as piano_session:
-        print (piano_session)
+        main(piano_session)
