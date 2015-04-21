@@ -5,6 +5,7 @@ LEVELS = {
             "general1",
             "general2",
             "general3",
+            "final",
         ],
         "file": "level0.csv"
     },
@@ -15,6 +16,7 @@ LEVELS = {
             "general2",
             "general3",
             "img1",
+            "final",
         ],
         "file": "level1.csv"
     },
@@ -25,6 +27,7 @@ LEVELS = {
             "general2",
             "general3",
             "img2",
+            "final",
         ],
         "file": "level2.csv"
     },
@@ -36,6 +39,7 @@ LEVELS = {
             "general3",
             "img1",
             "img2",
+            "final",
         ],
         "file": "level3.csv"
     },
@@ -46,6 +50,7 @@ LEVELS = {
             "general2",
             "general3",
             "img3",
+            "final",
         ],
         "file": "level4.csv"
     },
@@ -57,6 +62,7 @@ LEVELS = {
             "general3",
             "img3",
             "img1",
+            "final",
         ],
         "file": "level5.csv"
     },
@@ -68,6 +74,7 @@ LEVELS = {
             "general3",
             "img3",
             "img2",
+            "final",
         ],
         "file": "level6.csv"
     },
@@ -80,6 +87,7 @@ LEVELS = {
             "img1",
             "img2",
             "img3",
+            "final",
         ],
         "file": "level7.csv"
     },

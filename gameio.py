@@ -1,6 +1,7 @@
 from datetime import datetime
 from itertools import count
-from conf.levels import GROUPS
+from settings import settings
+from classes import InfoBackground
 import json
 import os
 
@@ -65,7 +66,7 @@ class PianoSession:
         self.all_sessions = all_sessions
 
     def read_group(self):
-        group_keys = list(GROUPS.keys())
+        group_keys = list(settings.GROUPS.keys())
         num_groups = len(group_keys)
         group      = ''
         i          = 0
@@ -102,6 +103,14 @@ class PianoSession:
 
         with open(self.sess_file_name, 'w') as sess_file:
             json.dump(self.all_sessions, sess_file, indent=4)
+
+    def get_infoscreens(self):
+        groups = settings.GROUPS
+        levels = settings.LEVELS
+
+        images = levels[groups[self.session['group']][self.session['level']]]['screens']
+
+        return list(map(lambda x:InfoBackground(x), images))
 
     def __str__(self):
         return '<Sesión de %s>'%self.player

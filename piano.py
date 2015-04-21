@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from classes import Background, Block, RedLine, scales, get_icon, infoscreens
+from classes import Background, Block, RedLine, scales, get_icon
 from data import tile_positions, sound_keys, sounds, sound_map
 from gameio import csv_result, get_out_name, PianoSession
 from settings import settings
@@ -54,20 +54,20 @@ def main(session):
     background = Background()
 
     # Blocks
-    blocks = nex_blocks(session)
+    # blocks = nex_blocks(session)
 
     # The red line
     redline = RedLine(380, 460, 2)
 
     # First scale (corresponding to first block)
-    scale = scales[blocks[0].scale]
+    # scale = scales[blocks[0].scale]
 
     # Blit everything to the screen
     clock = pygame.time.Clock()
 
     move     = False # controls redline motion speed
     position = 0 # stores current column
-    essay    = gen_essay(blocks) # Essay evaluation matrix
+    # essay    = gen_essay(blocks) # Essay evaluation matrix
     current_info = 0
 
     while True:
@@ -87,6 +87,7 @@ def main(session):
                 # Handles window close button
                 return
         else:
+            infoscreens = session.get_infoscreens()
             screen.blit(infoscreens[current_info].image, infoscreens[current_info].rect)
 
             pygame.display.flip()
