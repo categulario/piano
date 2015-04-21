@@ -5,10 +5,8 @@ LEVELS = {
             "general1",
             "general2",
             "general3",
-            "level0_1",
-            "level0_2",
         ],
-        "file": "piano.csv"
+        "file": "level0.csv"
     },
     "level1": {
         "criteria": 5,
@@ -16,10 +14,9 @@ LEVELS = {
             "general1",
             "general2",
             "general3",
-            "level1_1",
-            "level1_2",
+            "img1",
         ],
-        "file": "piano.csv"
+        "file": "level1.csv"
     },
     "level2": {
         "criteria": 5,
@@ -27,10 +24,9 @@ LEVELS = {
             "general1",
             "general2",
             "general3",
-            "level2_1",
-            "level2_2",
+            "img2",
         ],
-        "file": "piano.csv"
+        "file": "level2.csv"
     },
     "level3": {
         "criteria": 5,
@@ -38,20 +34,74 @@ LEVELS = {
             "general1",
             "general2",
             "general3",
-            "level3_1",
-            "level3_2",
+            "img1",
+            "img2",
         ],
-        "file": "piano.csv"
+        "file": "level3.csv"
+    },
+    "level4": {
+        "criteria": 5,
+        "screens": [
+            "general1",
+            "general2",
+            "general3",
+            "img3",
+        ],
+        "file": "level4.csv"
+    },
+    "level5": {
+        "criteria": 5,
+        "screens": [
+            "general1",
+            "general2",
+            "general3",
+            "img3",
+            "img1",
+        ],
+        "file": "level5.csv"
+    },
+    "level6": {
+        "criteria": 5,
+        "screens": [
+            "general1",
+            "general2",
+            "general3",
+            "img3",
+            "img2",
+        ],
+        "file": "level6.csv"
+    },
+    "level7": {
+        "criteria": 5,
+        "screens": [
+            "general1",
+            "general2",
+            "general3",
+            "img1",
+            "img2",
+            "img3",
+        ],
+        "file": "level7.csv"
     },
 }
 
 GROUPS = {
-    "group1": [
+    "aislado": [
         "level0",
         "level1",
-    ],
-    "group2": [
         "level2",
+        "level4",
+    ],
+    "progresivo": [
+        "level0",
+        "level1",
         "level3",
+        "level8",
+    ],
+    "integral": [
+        "level0",
+        "level8",
+        "level8",
+        "level8",
     ],
 }
