@@ -10,7 +10,7 @@ def csv_result(essay):
     output file"""
     def to_line(val):
         return ','.join(map(str, val))+'\n'
-    return map(to_line, essay)
+    return list(map(to_line, essay))
 
 def get_out_name(sess_name):
     """Compute the name for the output file given the input file name"""
@@ -22,6 +22,7 @@ class PianoSession:
     session      = {}
     player       = ''
     all_sessions = {}
+    results      = []
 
     sess_file_name = 'sessions.json'
 
@@ -38,6 +39,7 @@ class PianoSession:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.write_session()
+        self.write_results()
 
     def read_session(self):
         with open(self.sess_file_name, 'r') as sess_file:
@@ -103,6 +105,9 @@ class PianoSession:
 
         with open(self.sess_file_name, 'w') as sess_file:
             json.dump(self.all_sessions, sess_file, indent=4)
+
+    def write_results(self):
+        print (self.results)
 
     def get_level(self):
         groups = settings.GROUPS
