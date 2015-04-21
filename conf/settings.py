@@ -1,6 +1,6 @@
 LEVELS = {
     "level0": {
-        "criteria": 5,
+        "criteria": 1,
         "screens": [
             "general1",
             "general2",

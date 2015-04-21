@@ -54,21 +54,24 @@ def main(session):
     background = Background()
 
     # Blocks
-    # blocks = nex_blocks(session)
+    blocks = nex_blocks(session)
 
     # The red line
     redline = RedLine(380, 460, 2)
 
     # First scale (corresponding to first block)
-    # scale = scales[blocks[0].scale]
+    scale = scales[blocks[0].scale]
 
     # Blit everything to the screen
     clock = pygame.time.Clock()
 
-    move     = False # controls redline motion speed
-    position = 0 # stores current column
-    # essay    = gen_essay(blocks) # Essay evaluation matrix
+    move         = False # controls redline motion speed
+    position     = 0 # stores current column
+    essay        = gen_essay(blocks) # Essay evaluation matrix
+    infoscreens  = session.get_infoscreens()
+    num_infos    = len(infoscreens)
     current_info = 0
+    criteria     = session.get_criteria()
 
     while True:
         # tick to 60 fps
@@ -81,13 +84,12 @@ def main(session):
             elif event.type == KEYDOWN:
                 # Valid key, validate input and update essay evaluation matrix
                 current_info += 1
-                if current_info == 8:
+                if current_info == num_infos:
                     break
             elif event.type == QUIT:
                 # Handles window close button
                 return
         else:
-            infoscreens = session.get_infoscreens()
             screen.blit(infoscreens[current_info].image, infoscreens[current_info].rect)
 
             pygame.display.flip()
@@ -108,7 +110,7 @@ def main(session):
                 if not (essay[position][2] & EVAL_CLICK):
                     essay[position][2] = eval_key(blocks[position], *sound_map[event.unicode])
                     # Every required condition was stisfied, play sound
-                    if (essay[position][2] & test) == test:
+                    if (essay[position][2] & criteria) == criteria:
                         sounds[sound_map[event.unicode]].play()
             elif event.type == QUIT:
                 # Handles window close button
@@ -119,7 +121,7 @@ def main(session):
         screen.blit(background.image, background.rect)
 
         # Paint blocks
-        if test & EVAL_NOTE:
+        if criteria & EVAL_NOTE:
             for block in blocks:
                 screen.blit(block.image, block.rect)
 
@@ -138,10 +140,10 @@ def main(session):
                 scale = scales[blocks[position].scale]
 
         # Paint the redline
-        if test & EVAL_TIME:
+        if criteria & EVAL_TIME:
             screen.blit(redline.image, redline.rect)
         # Paint the scale
-        if test & EVAL_SCALE:
+        if criteria & EVAL_SCALE:
             screen.blit(scale.image, scale.rect)
 
         # Send everything to screen

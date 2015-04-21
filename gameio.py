@@ -104,13 +104,26 @@ class PianoSession:
         with open(self.sess_file_name, 'w') as sess_file:
             json.dump(self.all_sessions, sess_file, indent=4)
 
-    def get_infoscreens(self):
+    def get_level(self):
         groups = settings.GROUPS
         levels = settings.LEVELS
+        return levels[groups[self.session['group']][self.session['level']]]
 
-        images = levels[groups[self.session['group']][self.session['level']]]['screens']
+    def get_infoscreens(self):
+        images = self.get_level()['screens']
 
         return list(map(lambda x:InfoBackground(x), images))
+
+    def get_criteria(self):
+        return self.get_level()['criteria']
+
+    def __iter__(self):
+        file_name = self.get_level()['file']
+
+        return (
+            line.strip().split(',')
+            for line in open(os.path.join('media/sessions', file_name), 'r')
+        )
 
     def __str__(self):
         return '<Sesión de %s>'%self.player
