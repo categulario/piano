@@ -101,6 +101,7 @@ class PianoSession:
         return group
 
     def write_session(self):
+        self.session['level'] += 1
         self.all_sessions['players'][self.player] = self.session
 
         with open(self.sess_file_name, 'w') as sess_file:
