@@ -112,7 +112,14 @@ class PianoSession:
             json.dump(self.all_sessions, sess_file, indent=4)
 
     def write_results(self):
-        print (self.results)
+        out_dir  = os.path.join('media/data', self.player)
+        out_file_name = os.path.join(out_dir, '%d.csv'%self.session['level'])
+
+        if not os.path.isdir(out_dir):
+            os.mkdir(out_dir)
+
+        with open(out_file_name, 'w') as out_file:
+            out_file.writelines(self.results)
 
     def get_level(self):
         groups = settings.GROUPS
