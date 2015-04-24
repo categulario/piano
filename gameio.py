@@ -113,13 +113,14 @@ class PianoSession:
 
     def write_results(self):
         out_dir  = os.path.join('media/data', self.player)
-        out_file_name = os.path.join(out_dir, '%d.csv'%self.session['level'])
+        out_file_name = os.path.join(out_dir, '%s_%d.csv'%(self.session['group'], self.session['level']))
 
         if not os.path.isdir(out_dir):
             os.mkdir(out_dir)
 
         with open(out_file_name, 'w') as out_file:
             out_file.writelines(self.results)
+            print ('Datos guardados en %s'%out_file_name)
 
     def get_level(self):
         groups = settings.GROUPS
