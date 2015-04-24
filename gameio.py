@@ -65,6 +65,10 @@ class PianoSession:
                 'level': 0,
             }
 
+        print ()
+        print ('Jugando el jugador %s, que pertenece al grupo %s en el nivel %d'%(self.player, self.session['group'], self.session['level']))
+        print ()
+
         self.all_sessions = all_sessions
 
     def read_group(self):
