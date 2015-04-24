@@ -130,7 +130,7 @@ def main(session):
             position = redline.move()
             if position == 4:
                 # Finished essay
-                session.results.extend(csv_result(essay))
+                session.results += csv_result(essay)
                 blocks = nex_blocks(session)
                 essay  = gen_essay(blocks)
                 if not blocks:
