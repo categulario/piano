@@ -117,7 +117,15 @@ class PianoSession:
     def get_level(self):
         groups = settings.GROUPS
         levels = settings.LEVELS
-        return levels[groups[self.session['group']][self.session['level']]]
+
+        current_level = self.session['level']
+        current_group = self.session['group']
+
+        if current_level < len(groups[current_group]):
+            return levels[groups[current_group][current_level]]
+        else:
+            print ('No hay más niveles para este usuario en este grupo')
+            exit()
 
     def get_infoscreens(self):
         images = self.get_level()['screens']
