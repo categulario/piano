@@ -38,8 +38,8 @@ class PianoSession:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.write_session()
         self.write_results()
+        self.write_session()
 
     def read_session(self):
         with open(self.sess_file_name, 'r') as sess_file:
