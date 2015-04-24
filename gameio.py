@@ -113,7 +113,10 @@ class PianoSession:
 
     def write_results(self):
         out_dir  = os.path.join('media/data', self.player)
-        out_file_name = os.path.join(out_dir, '%s_%d.csv'%(self.session['group'], self.session['level']))
+        out_file_name = os.path.join(out_dir, '%s_%s.csv'%(
+            self.session['group'],
+            self.get_level_name(),
+        ))
 
         if not os.path.isdir(out_dir):
             os.mkdir(out_dir)
@@ -121,6 +124,14 @@ class PianoSession:
         with open(out_file_name, 'w') as out_file:
             out_file.writelines(self.results)
             print ('Datos guardados en %s'%out_file_name)
+
+    def get_level_name(self):
+        groups = settings.GROUPS
+
+        current_group = self.session['group']
+        current_level = self.session['level']
+
+        return groups[current_group][current_level]
 
     def get_level(self):
         groups = settings.GROUPS
@@ -130,7 +141,7 @@ class PianoSession:
         current_group = self.session['group']
 
         if current_level < len(groups[current_group]):
-            return levels[groups[current_group][current_level]]
+            return levels[self.get_level_name()]
         else:
             print ('No hay más niveles para este usuario en este grupo')
             exit()
