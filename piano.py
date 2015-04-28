@@ -36,44 +36,17 @@ def gen_essay(blocks):
     """Given a list of block objects return the evaluation matrix for this essay
     """
     return [
-        [block.note, block.scale, 0]
+        (block.note, block.scale)
         for block in blocks
     ]
 
-def main(session):
-    """Main entry point of this game, keeps the game loop"""
-    # Initialize screen
-    pygame.init()
-    # the game screen, pass FULLSCREEN to fullscreen
-    screen = pygame.display.set_mode((800, 600))
-    # Game icon
-    pygame.display.set_icon(get_icon())
-    # Game title
-    pygame.display.set_caption('Piano')
-
-    # Fill background
-    background = Background()
-
-    # Blocks
-    blocks = nex_blocks(session)
-
-    # The red line
-    redline = RedLine(380, 460, 2)
-
-    # First scale (corresponding to first block)
-    scale = scales[blocks[0].scale]
-
-    # Blit everything to the screen
-    clock = pygame.time.Clock()
-
-    move         = False # controls redline motion speed
-    position     = 0 # stores current column given by the clock
-    essay        = gen_essay(blocks) # Essay evaluation matrix
+def display_info(session, screen, clock):
+    # Info screen variables
     infoscreens  = session.get_infoscreens()
     num_infos    = len(infoscreens)
     current_info = 0
-    criteria     = session.get_criteria()
 
+    # Info screen
     while True:
         # tick to 60 fps
         clock.tick(60)
@@ -96,6 +69,40 @@ def main(session):
             pygame.display.flip()
             continue
         break
+
+def main(session):
+    """Main entry point of this game, keeps the game loop"""
+    # Initialize screen
+    pygame.init()
+    # the game screen, pass FULLSCREEN to fullscreen
+    screen = pygame.display.set_mode((800, 600))
+    # Game icon
+    pygame.display.set_icon(get_icon())
+    # Game title
+    pygame.display.set_caption('Piano')
+
+    # Fill background
+    background = Background()
+
+    # Blit everything to the screen
+    clock = pygame.time.Clock()
+
+    # Display info screens
+    display_info(session, screen, clock)
+
+    # Blocks
+    blocks = nex_blocks(session)
+    # The red line
+    redline = RedLine(380, 460, 2)
+    # First scale (corresponding to first block)
+    scale = scales[blocks[0].scale]
+
+    # Gane loop variables
+    move         = False # controls redline motion speed
+    position     = 0 # stores current column given by the clock
+    evaluation   = [] # Essay evaluation matrix
+    essay        = gen_essay(blocks)
+    criteria     = session.get_criteria()
 
     # Event loop
     while True:
