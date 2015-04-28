@@ -16,3 +16,13 @@ The piano game, in pygame
 * `pip install <pygame downloaded file>`
 * go to `cmd.exe`, then cd to repo, `python piano.py` or double click `piano.py`
 * enjoy
+
+## Change log
+
+### 0.2
+
+* Session support
+
+### 0.1
+
+* The game
