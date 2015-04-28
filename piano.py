@@ -10,6 +10,7 @@ import sys
 
 # Bitmask values for evaluation
 EVAL_CLICK = 1
+
 EVAL_NOTE  = 2
 EVAL_SCALE = 4
 EVAL_TIME  = 8
@@ -66,7 +67,7 @@ def main(session):
     clock = pygame.time.Clock()
 
     move         = False # controls redline motion speed
-    position     = 0 # stores current column
+    position     = 0 # stores current column given by the clock
     essay        = gen_essay(blocks) # Essay evaluation matrix
     infoscreens  = session.get_infoscreens()
     num_infos    = len(infoscreens)
@@ -116,18 +117,10 @@ def main(session):
                 # Handles window close button
                 return
 
-        # Paint background
-        screen.fill((255, 255, 255))
-        screen.blit(background.image, background.rect)
-
-        # Paint blocks
-        if criteria & EVAL_NOTE:
-            for block in blocks:
-                screen.blit(block.image, block.rect)
-
         # Move the redline
         if move:
             position = redline.move()
+            # Report past essay to session
             if position == 4:
                 # Finished essay
                 session.results += csv_result(essay)
@@ -138,6 +131,15 @@ def main(session):
             elif position > -1:
                 # get next scale
                 scale = scales[blocks[position].scale]
+
+        # Paint background
+        screen.fill((255, 255, 255))
+        screen.blit(background.image, background.rect)
+
+        # Paint blocks
+        if criteria & EVAL_NOTE:
+            for block in blocks:
+                screen.blit(block.image, block.rect)
 
         # Paint the redline
         if criteria & EVAL_TIME:
