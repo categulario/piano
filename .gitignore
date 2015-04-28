@@ -53,6 +53,5 @@ docs/_build/
 # PyBuilder
 target/
 /Piano.sublime-workspace
-/media/sessions/*.csv
 /conf/settings_*.py
 /sessions.json

@@ -1,6 +1,6 @@
 LEVELS = {
     "level0": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -10,7 +10,7 @@ LEVELS = {
         "file": "level0.csv"
     },
     "level1": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -21,7 +21,7 @@ LEVELS = {
         "file": "level1.csv"
     },
     "level2": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -32,7 +32,7 @@ LEVELS = {
         "file": "level2.csv"
     },
     "level3": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -44,7 +44,7 @@ LEVELS = {
         "file": "level3.csv"
     },
     "level4": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -55,7 +55,7 @@ LEVELS = {
         "file": "level4.csv"
     },
     "level5": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -67,7 +67,7 @@ LEVELS = {
         "file": "level5.csv"
     },
     "level6": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -79,7 +79,7 @@ LEVELS = {
         "file": "level6.csv"
     },
     "level7": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -92,7 +92,7 @@ LEVELS = {
         "file": "level7.csv"
     },
     "level8": {
-        "criteria": 9,
+        "criteria": 8,
         "screens": [
             "general1",
             "general2",
@@ -103,6 +103,18 @@ LEVELS = {
             "final",
         ],
         "file": "level8.csv"
+    },
+
+    # Niveles de prueba
+    "sin_cuando": {
+        "criteria": 6,
+        "screens": [
+            "general1",
+            "general2",
+            "general3",
+            "final",
+        ],
+        "file": "test.csv",
     },
 }
 
@@ -124,5 +136,8 @@ GROUPS = {
         "level8",
         "level8",
         "level8",
+    ],
+    "prueba": [
+        "sin_cuando",
     ],
 }
