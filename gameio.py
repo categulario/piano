@@ -23,6 +23,7 @@ class PianoSession:
     player       = ''
     all_sessions = {}
     results      = []
+    iterator     = None
 
     sess_file_name = 'sessions.json'
 
@@ -123,6 +124,8 @@ class PianoSession:
 
         with open(out_file_name, 'w') as out_file:
             out_file.writelines(self.results)
+            print ('Data: ')
+            print (*self.results)
             print ('Datos guardados en %s'%out_file_name)
 
     def get_level_name(self):
@@ -159,12 +162,15 @@ class PianoSession:
         return self.get_level()['criteria']
 
     def __iter__(self):
-        file_name = self.get_level()['file']
+        if not self.iterator:
+            file_name = self.get_level()['file']
 
-        return (
-            line.strip().split(',')
-            for line in open(os.path.join('media/sessions', file_name), 'r')
-        )
+            self.iterator = (
+                line.strip().split(',')
+                for line in open(os.path.join('media/sessions', file_name), 'r')
+            )
+
+        return self.iterator
 
     def __str__(self):
         return '<Sesión de %s>'%self.player
