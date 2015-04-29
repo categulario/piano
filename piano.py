@@ -21,13 +21,15 @@ def nex_blocks(session):
         return Block(tile_positions[note_tuple[1][0], note_tuple[0]], note_tuple[1][0], note_tuple[1][1])
     return list(map(gen_blocks, enumerate(islice(session, 4))))
 
-def eval_key(block, note, scale):
+def eval_key(block, evaluated, note, scale):
     """Compute the evaluation of a click"""
-    res = EVAL_CLICK | EVAL_TIME
+    res = 0
     if note == block.note:
         res |= EVAL_NOTE
     if scale == block.scale:
         res |= EVAL_SCALE
+    if not evaluated:
+        res |= EVAL_TIME
     return res
 
 def gen_essay(blocks):
@@ -96,8 +98,10 @@ def main(session):
     scale = scales[blocks[0].scale]
 
     # Gane loop variables
-    move         = False # controls redline motion speed
-    position     = 0 # stores current column given by the clock
+    move         = True # controls redline motion speed
+    column       = -1 # stores current column given by the clock
+    progress     = float('-inf') # register progress of redline
+    evaluated    = False # A flag that indicates if this column has been evaluated
     evaluation   = [] # Essay evaluation matrix
     essay        = gen_essay(blocks)
     criteria     = session.get_criteria()
@@ -111,31 +115,36 @@ def main(session):
             if event.type == KEYDOWN and event.key == 27:
                 # ESC key, exit game
                 return
-            elif event.type == KEYDOWN and event.unicode in sound_keys:
-                # Valid key, validate input and update essay evaluation matrix
-                if not (essay[position][2] & EVAL_CLICK):
-                    essay[position][2] = eval_key(blocks[position], *sound_map[event.unicode])
-                    # Every required condition was stisfied, play sound
-                    if (essay[position][2] & criteria) == criteria:
-                        sounds[sound_map[event.unicode]].play()
+            elif event.type == KEYDOWN and event.unicode in sound_keys and column>-1:
+                clicked_note, clicked_scale = key_map[event.unicode]
+                # print (eval_key(blocks[column], evaluated, clicked_note, clicked_scale))
             elif event.type == QUIT:
                 # Handles window close button
                 return
 
         # Move the redline
         if move:
-            position = redline.move()
-            # Report past essay to session
-            if position == 4:
-                # Finished essay
-                session.results += csv_result(essay)
-                blocks = nex_blocks(session)
-                essay  = gen_essay(blocks)
-                if not blocks:
-                    break
-            elif position > -1:
-                # get next scale
-                scale = scales[blocks[position].scale]
+            new_progress = redline.move()
+            if progress != new_progress: # progress has changed
+                # Essay finished, report to session
+                if new_progress < progress:
+                    session.results += csv_result(evaluation)
+                    blocks     = nex_blocks(session)
+                    essay      = gen_essay(blocks)
+                    evaluation = []
+
+                    if not blocks:
+                        break
+                progress = new_progress
+
+            if criteria & EVAL_TIME:
+                new_column = redline.get_column()
+
+        # Change the column and the scale
+        if new_column != column and new_column > -1:
+            evaluated = False
+            column = new_column
+            scale = scales[blocks[column].scale]
 
         # Paint background
         screen.fill((255, 255, 255))
