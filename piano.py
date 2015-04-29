@@ -9,8 +9,6 @@ import os
 import sys
 
 # Bitmask values for evaluation
-EVAL_CLICK = 1
-
 EVAL_NOTE  = 2
 EVAL_SCALE = 4
 EVAL_TIME  = 8
