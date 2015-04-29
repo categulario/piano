@@ -7,6 +7,7 @@ from settings import settings
 from itertools import islice
 import os
 import sys
+import time
 
 # Bitmask values for evaluation
 EVAL_NOTE  = 2
@@ -105,6 +106,7 @@ def main(session):
     evaluation   = [] # Essay evaluation matrix
     essay        = gen_essay(blocks)
     criteria     = session.get_criteria()
+    essay_num    = 1
 
     # Event loop
     while True:
@@ -117,7 +119,26 @@ def main(session):
                 return
             elif event.type == KEYDOWN and event.unicode in sound_keys and column>-1:
                 clicked_note, clicked_scale = key_map[event.unicode]
-                # print (eval_key(blocks[column], evaluated, clicked_note, clicked_scale))
+                score = eval_key(
+                    blocks[column],
+                    evaluated,
+                    clicked_note,
+                    clicked_scale
+                )
+
+                evaluation.append([
+                    essay_num,
+                    blocks[column].note if not evaluated else None,
+                    blocks[column].scale if not evaluated else None,
+                    clicked_note,
+                    clicked_scale,
+                    score,
+                    time.time(),
+                ])
+
+                if (score & criteria) == criteria:
+                    sounds[key_map[event.unicode]].play()
+                evaluated = True
             elif event.type == QUIT:
                 # Handles window close button
                 return
@@ -132,6 +153,7 @@ def main(session):
                     blocks     = nex_blocks(session)
                     essay      = gen_essay(blocks)
                     evaluation = []
+                    essay_num += 1
 
                     if not blocks:
                         break
