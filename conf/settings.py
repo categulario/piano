@@ -107,7 +107,7 @@ LEVELS = {
 
     # Niveles de prueba
     "sin_cuando": {
-        "criteria": 6,
+        "criteria": 14,
         "screens": [
             "general1",
             "general2",
@@ -139,5 +139,5 @@ GROUPS = {
     ],
     "prueba": [
         "sin_cuando",
-    ],
+    ]*100,
 }
