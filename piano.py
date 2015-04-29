@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 from classes import Background, Block, RedLine, scales, get_icon
-from data import tile_positions, sound_keys, sounds, sound_map
+from data import tile_positions, sound_keys, sounds, key_map
 from gameio import csv_result, get_out_name, PianoSession
 from settings import settings
 from itertools import islice

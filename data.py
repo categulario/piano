@@ -47,7 +47,7 @@ sound_keys = [
 ]
 
 # Map keys to their corresponding note and scale
-sound_map = {
+key_map = {
     '3' : ('C', 1),
     '4' : ('D', 1),
     '5' : ('E', 1),
