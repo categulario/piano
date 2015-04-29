@@ -44,7 +44,7 @@ class PianoSession:
     def read_session(self):
         with open(self.sess_file_name, 'r') as sess_file:
             all_sessions = json.load(sess_file)
-        players      = all_sessions['players'].keys()
+        players      = sorted(all_sessions['players'].keys())
 
         print ('Bienvenido al juego, elige un jugador de la lista o crea uno nuevo')
         print ('escribiendo un nuevo nombre')
@@ -72,7 +72,7 @@ class PianoSession:
         self.all_sessions = all_sessions
 
     def read_group(self):
-        group_keys = list(settings.GROUPS.keys())
+        group_keys = sorted(settings.GROUPS.keys())
         num_groups = len(group_keys)
         group      = ''
         i          = 0
