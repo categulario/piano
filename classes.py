@@ -1,4 +1,5 @@
 import pygame
+import math
 
 def get_icon():
     return pygame.image.load('media/img/favicon.png')
@@ -34,10 +35,12 @@ class RedLine(pygame.sprite.Sprite):
         """Moves the redline to the next position and return current column"""
         if self.rect.left < 780-self.speed:
             self.rect.left += self.speed
-            return (self.rect.left-460)//80
         else:
             self.rect.left = self.loop_x
-            return 4
+        return int((self.rect.left - 460)/320*100)
+
+    def get_column(self):
+        return (self.rect.left-460)//80
 
 class Block(pygame.sprite.Sprite):
     """Black blocks that indicate the note to be played"""
