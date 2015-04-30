@@ -164,6 +164,16 @@ def main(session):
 
         # Change the column and the scale
         if new_column != column and new_column > -1:
+            if not evaluated: # Send an empty evaluation
+                evaluation.append([
+                    essay_num,
+                    blocks[column].note,
+                    blocks[column].scale,
+                    None,
+                    None,
+                    0,
+                    0,
+                ])
             evaluated = False
             column = new_column
             scale = scales[blocks[column].scale]
