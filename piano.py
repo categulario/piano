@@ -146,25 +146,13 @@ def main(session):
         # Move the redline
         if move:
             new_progress = redline.move()
-            if progress != new_progress: # progress has changed
-                # Essay finished, report to session
-                if new_progress < progress:
-                    session.results += csv_result(evaluation)
-                    blocks     = nex_blocks(session)
-                    essay      = gen_essay(blocks)
-                    evaluation = []
-                    essay_num += 1
-
-                    if not blocks:
-                        break
-                progress = new_progress
 
             if criteria & EVAL_TIME:
                 new_column = redline.get_column()
 
         # Change the column and the scale
         if new_column != column and new_column > -1:
-            if not evaluated: # Send an empty evaluation
+            if not evaluated and column>-1: # Send an empty evaluation
                 evaluation.append([
                     essay_num,
                     blocks[column].note,
@@ -177,6 +165,19 @@ def main(session):
             evaluated = False
             column = new_column
             scale = scales[blocks[column].scale]
+
+        if progress != new_progress: # progress has changed
+            # Essay finished, report to session
+            if new_progress < progress:
+                session.results += csv_result(evaluation)
+                blocks     = nex_blocks(session)
+                essay      = gen_essay(blocks)
+                evaluation = []
+                essay_num += 1
+
+                if not blocks:
+                    break
+            progress = new_progress
 
         # Paint background
         screen.fill((255, 255, 255))
