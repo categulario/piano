@@ -18,6 +18,7 @@ class PianoSession:
     player       = ''
     all_sessions = {}
     results      = []
+    iterator     = None
 
     sess_file_name = 'sessions.json'
 
@@ -39,7 +40,7 @@ class PianoSession:
     def read_session(self):
         with open(self.sess_file_name, 'r') as sess_file:
             all_sessions = json.load(sess_file)
-        players      = all_sessions['players'].keys()
+        players      = sorted(all_sessions['players'].keys())
 
         print ('Bienvenido al juego, elige un jugador de la lista o crea uno nuevo')
         print ('escribiendo un nuevo nombre')
@@ -67,7 +68,7 @@ class PianoSession:
         self.all_sessions = all_sessions
 
     def read_group(self):
-        group_keys = list(settings.GROUPS.keys())
+        group_keys = sorted(settings.GROUPS.keys())
         num_groups = len(group_keys)
         group      = ''
         i          = 0
@@ -118,6 +119,8 @@ class PianoSession:
 
         with open(out_file_name, 'w') as out_file:
             out_file.writelines(self.results)
+            print ('Data: ')
+            print (*self.results)
             print ('Datos guardados en %s'%out_file_name)
 
     def get_level_name(self):
@@ -126,7 +129,11 @@ class PianoSession:
         current_group = self.session['group']
         current_level = self.session['level']
 
-        return groups[current_group][current_level]
+        if current_level < len(groups[current_group]):
+            return groups[current_group][current_level]
+        else:
+            print ('No hay más niveles para este usuario en este grupo')
+            exit(0)
 
     def get_level(self):
         groups = settings.GROUPS
@@ -139,7 +146,7 @@ class PianoSession:
             return levels[self.get_level_name()]
         else:
             print ('No hay más niveles para este usuario en este grupo')
-            exit()
+            exit(0)
 
     def get_infoscreens(self):
         images = self.get_level()['screens']
@@ -150,12 +157,15 @@ class PianoSession:
         return self.get_level()['criteria']
 
     def __iter__(self):
-        file_name = self.get_level()['file']
+        if not self.iterator:
+            file_name = self.get_level()['file']
 
-        return (
-            line.strip().split(',')
-            for line in open(os.path.join('media/sessions', file_name), 'r')
-        )
+            self.iterator = (
+                line.strip().split(',')
+                for line in open(os.path.join('media/sessions', file_name), 'r')
+            )
+
+        return self.iterator
 
     def __str__(self):
         return '<Sesión de %s>'%self.player
