@@ -56,11 +56,16 @@ def display_info(session, screen, clock):
             if event.type == KEYDOWN and event.key == 27:
                 # ESC key, exit game
                 return
-            elif event.type == KEYDOWN:
+            elif event.type == KEYDOWN and event.unicode in sound_keys:
                 # Valid key, validate input and update essay evaluation matrix
-                current_info += 1
-                if current_info == num_infos:
-                    break
+                note = key_map[event.unicode][0]
+
+                if note == 'C':
+                    current_info += 1
+                    if current_info == num_infos:
+                        break
+                elif note == 'B' and current_info == num_infos-1:
+                    current_info = 0
             elif event.type == QUIT:
                 # Handles window close button
                 return
