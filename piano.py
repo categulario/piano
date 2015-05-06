@@ -144,6 +144,9 @@ def main(session):
                 if (score & criteria) == criteria:
                     sounds[key_map[event.unicode]].play()
                 evaluated = True
+
+                if not (criteria & EVAL_TIME):
+                    new_column = column+1
             elif event.type == QUIT:
                 # Handles window close button
                 return
@@ -152,12 +155,15 @@ def main(session):
         if move:
             new_progress = redline.move()
 
-            if criteria & EVAL_TIME:
+            if criteria & EVAL_TIME: # We are evaluating time
                 new_column = redline.get_column()
+            else: # Not evaluating time
+                if column == -1:
+                    new_column = 0
 
         # Change the column and the scale
-        if new_column != column and new_column > -1:
-            if not evaluated and column>-1: # Send an empty evaluation
+        if new_column != column and (4 > new_column > -1):
+            if not evaluated and column > -1: # Send an empty evaluation
                 evaluation.append([
                     essay_num,
                     blocks[column].note,
@@ -179,6 +185,9 @@ def main(session):
                 essay      = gen_essay(blocks)
                 evaluation = []
                 essay_num += 1
+                column     = 0
+                new_column = 0
+                evaluated  = False
 
                 if not blocks:
                     break
