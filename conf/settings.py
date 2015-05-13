@@ -107,7 +107,7 @@ LEVELS = {
 
     # Niveles de prueba
     "sin_cuando": {
-        "criteria": 14,
+        "criteria": 6,
         "screens": [
             "general1",
             "general2",

@@ -122,7 +122,7 @@ def main(session):
             if event.type == KEYDOWN and event.key == 27:
                 # ESC key, exit game
                 return
-            elif event.type == KEYDOWN and event.unicode in sound_keys and column>-1:
+            elif event.type == KEYDOWN and event.unicode in sound_keys and column > -1:
                 clicked_note, clicked_scale = key_map[event.unicode]
                 score = eval_key(
                     blocks[column],
