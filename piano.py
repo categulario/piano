@@ -148,6 +148,7 @@ def main(session):
                 # Handles window close button
                 return
 
+        new_column = 1
         # Move the redline
         if move:
             new_progress = redline.move()
